@@ -37,9 +37,23 @@ defmodule Libsecp256k1.Mixfile do
         github: "bitcoin-core/secp256k1",
         ref: "d33352151699bd7598b868369dace092f7855740",
         app: false,
-        compile: "./autogen.sh && ./configure && make",
+        compile: libsecp256k1_compile_command(),
       },
       {:ex_doc, "~> 0.17", only: :dev, runtime: false}
     ]
+  end
+
+  defp libsecp256k1_compile_command do
+    """
+    if [ ! -e configure ]
+    then
+      ./autogen.sh
+    fi &&
+    if [ ! -e Makefile ]
+    then
+      ./configure --enable-module-recovery
+    fi &&
+    make
+    """
   end
 end
