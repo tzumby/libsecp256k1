@@ -6,12 +6,12 @@ ERLANG_PATH = $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir(),
 CFLAGS += -I$(ERLANG_PATH)
 
 ifeq ($(wildcard deps/libsecp256k1),)
-	LIBSECP256K1_PATH = ../libsecp256k1
+	LIB_PATH = ../libsecp256k1
 else
-	LIBSECP256K1_PATH = deps/libsecp256k1
+	LIB_PATH = deps/libsecp256k1
 endif
 
-CFLAGS += -I$(LIBSECP256K1_PATH) -I$(LIBSECP256K1_PATH)/src -I$(LIBSECP256K1_PATH)/include
+CFLAGS += -I$(LIB_PATH) -I$(LIB_PATH)/src -I$(LIB_PATH)/include
 
 ifneq ($(OS),Windows_NT)
 	CFLAGS += -fPIC

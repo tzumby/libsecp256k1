@@ -770,7 +770,7 @@ atom_from_result(ErlNifEnv* env, int res)
 
 static ErlNifFunc nif_funcs[] = {
 	{"dsha256", 1, dsha256},
-  {"sha256", 1, sha256},
+    {"sha256", 1, sha256},
 	{"hmac_sha256", 2, hmac_sha256},
 	{"rand32", 0, rand32},
 	{"rand256", 0, rand256},
