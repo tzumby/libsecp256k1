@@ -791,4 +791,4 @@ static ErlNifFunc nif_funcs[] = {
 	{"ecdsa_recover_compact", 4, ecdsa_recover_compact}
 };
 
-ERL_NIF_INIT(Elixir.Secp256k1, nif_funcs, &load, NULL, &upgrade, &unload);
+ERL_NIF_INIT(libsecp256k1, nif_funcs, &load, NULL, &upgrade, &unload);
