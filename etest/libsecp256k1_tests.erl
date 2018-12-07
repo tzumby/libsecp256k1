@@ -7,7 +7,7 @@
 -module(libsecp256k1_tests).
 -author('mbranton@emberfinancial.com').
 
--include_lib("eunit/include/eunit.hrl").
+%% -include_lib("eunit/include/eunit.hrl").
 
 start() ->
 	ok.

@@ -26,12 +26,13 @@ LDFLAGS += c_src/secp256k1/.libs/libsecp256k1.a -lgmp
 
 all: priv/libsecp256k1_nif.so
 
-priv/libsecp256k1_nif.so: c_src/libsecp256k1_nif.c
-	c_src/build_deps.sh
+priv/libsecp256k1_nif.so: c_src/libsecp256k1_nif.c c_src/secp256k1
 	$(CC) $(CFLAGS) -shared -o $@ c_src/libsecp256k1_nif.c $(LDFLAGS)
+
+s_src/secp256k1:
+	git submodule update --recursive
 
 clean:
 	$(MIX) clean
-	c_src/build_deps.sh clean
 	$(MAKE) -C $(LIB_PATH) clean
 	$(RM) priv/libsecp256k1_nif.so
