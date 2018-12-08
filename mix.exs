@@ -33,7 +33,7 @@ defmodule Libsecp256k1.Mixfile do
   defp deps() do
     [
       {
-        :libsecp256k1,
+        :libsecp256k1_source,
         github: "bitcoin-core/secp256k1",
         ref: "d33352151699bd7598b868369dace092f7855740",
         app: false,

@@ -36,8 +36,12 @@ defmodule Secp256k1Test do
     {:ok, private_key_tweak_mul} = :libsecp256k1.ec_privkey_tweak_mul(private_key, tweak)
     {:ok, public_key_tweak_add} = :libsecp256k1.ec_pubkey_tweak_add(public_key, tweak)
     {:ok, public_key_tweak_mul} = :libsecp256k1.ec_pubkey_tweak_mul(public_key, tweak)
-    assert :libsecp256k1.ec_pubkey_create(private_key_tweak_add, :compressed) == {:ok, public_key_tweak_add}
-    assert :libsecp256k1.ec_pubkey_create(private_key_tweak_mul, :compressed) == {:ok, public_key_tweak_mul}
+
+    assert :libsecp256k1.ec_pubkey_create(private_key_tweak_add, :compressed) ==
+             {:ok, public_key_tweak_add}
+
+    assert :libsecp256k1.ec_pubkey_create(private_key_tweak_mul, :compressed) ==
+             {:ok, public_key_tweak_mul}
   end
 
   test "Signing" do
@@ -60,11 +64,15 @@ defmodule Secp256k1Test do
     message = "This is a very secret compact message..."
     random_bytes = :crypto.strong_rand_bytes(32)
     {:ok, public_key} = :libsecp256k1.ec_pubkey_create(random_bytes, :uncompressed)
-    {:ok, signature, recovery_id} = :libsecp256k1.ecdsa_sign_compact(message, random_bytes, :default, <<>>)
-    {:ok, recovered_key} = :libsecp256k1.ecdsa_recover_compact(message, signature, :uncompressed, recovery_id)
+
+    {:ok, signature, recovery_id} =
+      :libsecp256k1.ecdsa_sign_compact(message, random_bytes, :default, <<>>)
+
+    {:ok, recovered_key} =
+      :libsecp256k1.ecdsa_recover_compact(message, signature, :uncompressed, recovery_id)
+
     assert public_key == recovered_key
     assert :libsecp256k1.ecdsa_verify_compact(message, signature, public_key) == :ok
-
   end
 
   test "Sha256" do
@@ -72,5 +80,5 @@ defmodule Secp256k1Test do
     double_hashed = :crypto.hash(:sha256, :crypto.hash(:sha256, random_bytes))
     assert :libsecp256k1.sha256(:libsecp256k1.sha256(random_bytes)) == double_hashed
     assert :libsecp256k1.dsha256(random_bytes) == double_hashed
-	end
+  end
 end
