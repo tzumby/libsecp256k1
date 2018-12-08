@@ -5,10 +5,10 @@ SOURCE = src/libsecp256k1_nif.c
 ERLANG_PATH = $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir(), "/erts-", erlang:system_info(version), "/include"])])' -s init stop -noshell)
 CFLAGS += -I$(ERLANG_PATH)
 
-ifeq ($(wildcard deps/libsecp256k1),)
-	LIB_PATH = ../libsecp256k1
+ifeq ($(wildcard deps/libsecp256k1_source),)
+	LIB_PATH = ../libsecp256k1_source
 else
-	LIB_PATH = deps/libsecp256k1
+	LIB_PATH = deps/libsecp256k1_source
 endif
 
 CFLAGS += -I$(LIB_PATH) -I$(LIB_PATH)/src -I$(LIB_PATH)/include
@@ -21,7 +21,7 @@ ifneq ($(OS),Windows_NT)
 	endif
 endif
 
-LDFLAGS += deps/libsecp256k1/.libs/libsecp256k1.a -lgmp
+LDFLAGS += $(LIB_PATH)/.libs/libsecp256k1.a -lgmp
 
 .PHONY: clean
 
