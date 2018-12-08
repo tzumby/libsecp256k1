@@ -16,7 +16,6 @@ jobs:
       - run: mix local.hex --force
       - run: mix deps.get
       - run: mix deps.compile
-      - run: make
       - run:
           name: Run tests
           command: mix test
