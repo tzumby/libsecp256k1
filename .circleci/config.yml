@@ -15,13 +15,10 @@ jobs:
            - v1-dependency-cache
       - run: mix local.hex --force
       - run: mix deps.get
-      - run: make
+      - run: mix deps.compile
       - run:
           name: Run tests
-          command: |
-            output=$(mix eunit -v -p)
-            echo "$output"
-            echo "$output" | grep "All [[:digit:]]* tests passed\."
+          command: mix test
       - save_cache:
           key: v1-dependency-cache-{{ arch }}-{{ checksum "mix.lock" }}
           paths:
